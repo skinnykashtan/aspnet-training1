@@ -1,4 +1,5 @@
-﻿using Web1.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Web1.Data;
 using Web1.Interfaces;
 using Web1.Models;
 
@@ -13,13 +14,16 @@ public class UserRepository : IUserRepository
         _context = context;
     }
 
-    public Task<User> AddAsync(User user)
+    public async Task<User> AddUserAsync(User user)
     {
-        throw new NotImplementedException();
+        await _context.AddAsync(user);
+        await _context.SaveChangesAsync();
+
+        return user;
     }
 
-    public Task<User> GetByEmailAsync(User user)
+    public async Task<User> GetByEmailAsync(string email)
     {
-        throw new NotImplementedException();
+        return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
     }
 }

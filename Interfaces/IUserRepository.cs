@@ -4,6 +4,6 @@ namespace Web1.Interfaces;
 
 public interface IUserRepository
 {
-    Task<User> AddAsync(User user);
-    Task<User> GetByEmailAsync(User user);
+    Task<User> AddUserAsync(User user);
+    Task<User> GetByEmailAsync(string email);
 }
