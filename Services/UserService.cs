@@ -20,7 +20,7 @@ public class UserService : IUserService
 
     public async Task<UserDto> CreateUserAsync(CreateUserDto dto)
     {
-        var existingUser = _userRepository.GetByEmailAsync(dto.Email);
+        var existingUser = await _userRepository.GetByEmailAsync(dto.Email);
 
         if (existingUser != null)
         {
@@ -35,11 +35,25 @@ public class UserService : IUserService
         user.Email = dto.Email;
         user.PasswordHash = hash;
 
+        await _userRepository.AddUserAsync(user);
+
         return new UserDto()
         {
             Id = user.Id,
             Username = user.Username,
             Email = user.Email
         };
+    }
+
+    public async Task<List<UserDto>> GetAllAsync()
+    {
+        var users = await _userRepository.GetAllAsync();
+
+        return users.Select(u => new UserDto()
+        {
+            Id = u.Id,
+            Username = u.Username,
+            Email = u.Email
+        }).ToList();
     }
 }

@@ -5,4 +5,5 @@ namespace Web1.Interfaces;
 public interface IUserService
 {
     Task<UserDto> CreateUserAsync(CreateUserDto dto);
+    Task<List<UserDto>> GetAllAsync();
 }

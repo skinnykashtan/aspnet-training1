@@ -1,5 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Web1.Data;
+using Web1.Interfaces;
+using Web1.Repositories;
+using Web1.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +15,9 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite("Data Source=./Data/app.db"));
+
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 var app = builder.Build();
 
